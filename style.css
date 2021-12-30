@@ -1,15 +1,25 @@
-body {
+* {
   margin: 0;
   padding: 0;
 }
 
-.body {
+img {
+  width: 80%;
+  height: auto;
+  max-width: 80%;
+}
+
+body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+h2 {
+  margin-bottom: 2vh;
+}
+
 #header {
-  margin-top: 1em;
-  margin-bottom: 3em;
+  margin-top: 0em;
+  margin-bottom: 2em;
   padding: 1em;
   text-align: center;
   border: 1px solid black;
@@ -21,34 +31,71 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  /* min-height: 500px; */
-  background-color: lightyellow;
+  flex-direction: row;
+  background-color: rgb(0, 54, 0);
   width: 80%;
-  height: 50vh;
   margin: auto;
-  padding: 5vh;
+  padding: 3vh;
   border: solid 3px rgb(255, 255, 0);
   border-radius: 25px;
 }
 
 .dealer,
 .player {
+  display: flex;
+  align-items: flex;
+  justify-content: center;
+  flex-direction: column;
   position: relative;
   width: 100%;
   text-align: center;
   border: solid 1px black;
-  padding-bottom: 1em;
+  padding: 1em;
   margin: 1em;
-  border-radius: 5px;
+  border-radius: 15px;
+  background-color: yellow;
+}
+
+.player {
+  opacity: 100%;
 }
 
 .dealer {
-  background-color: yellow;
+  opacity: 90%;
+}
+
+.cards-dealer,
+.cards-player {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+  /* margin-top: 5vh; */
+  justify-content: center;
+  width: 85%;
+  /* height: auto; */
+  border: 1px dashed red;
+  border-radius: 15px;
+  padding: 1vw;
+}
+
+.card {
+  position: relative;
+  width: 5vw;
+  margin: 0.5vh;
+  padding: 0.25px;
+  overflow: auto;
+}
+
+.hidden {
+  display: none;
 }
 
 .stats {
   margin: auto;
+  margin-top: 3vh;
+  margin-bottom: 1vh;
   width: 50%;
   border: dashed 1px gray;
   background-color: whitesmoke;
@@ -63,11 +110,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction:row
-  width: 100%;
+  flex-direction: row;
+  width: 80%;
   margin: auto;
-  border: solid 1px black;
-  padding: 3vh;
+  /* margin-top: 2em; */
+  /* border: dashed 1px blue; */
+  padding: 2vh;
 }
 
 .btn {
@@ -91,7 +139,7 @@ body {
 
 .new-game {
   width: auto;
-    background-color: purple;
+  background-color: purple;
   border-radius: 25px;
   font-style: italic;
   box-shadow: 0 4px 8px 0 rebeccapurple, 0 3px 10px 0 rebeccapurple;

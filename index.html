@@ -9,26 +9,42 @@
   </head>
   <body>
     <header id="header">
-      <h1>Winners Only Blackjack</h1>
+      <h1>♠️ ♥️ Winners Only Blackjack ♣️ ♦️</h1>
     </header>
     <div id="table">
-      <div class="dealer">
-        <h2>Dealer's hand</h2>
-        <div class="stats">
-          <span class="dealer-score">dealer score: 0</span>
-        </div>
-      </div>
       <div class="player">
         <h2>Your hand</h2>
+        <div class="cards-player">
+          <img src="cards/back.png" class="card" />
+          <img src="cards/back.png" class="card" />
+          <img src="cards/back.png" class="card" />
+          <img src="cards/back.png" class="card" />
+          <img src="cards/back.png" class="card" />
+          <img src="cards/back.png" class="card" />
+        </div>
         <div class="stats">
-          <span class="player-score">Your score: 1</span>
+          <p>Your score: <span class="player-score">1</span></p>
         </div>
       </div>
-      <div class="controls">
-        <button class="btn new-game">New Game</button>
-        <button class="btn hit">Hit</button>
-        <button class="btn stand">Stand</button>
+      <div class="dealer">
+        <h2>Dealer's hand</h2>
+        <div class="cards-dealer">
+          <img src="cards/back.png" class="card" />
+          <img src="cards/back.png" class="card" />
+          <img src="cards/back.png" class="card hidden" />
+          <img src="cards/back.png" class="card hidden" />
+          <img src="cards/back.png" class="card hidden" />
+          <img src="cards/back.png" class="card hidden" />
+        </div>
+        <div class="stats">
+          <p>Dealer score: <span class="dealer-score">0</span></p>
+        </div>
       </div>
+    </div>
+    <div class="controls">
+      <button class="btn new-game">New Game</button>
+      <button class="btn hit">Hit</button>
+      <button class="btn stand">Stand</button>
     </div>
   </body>
 </html>
