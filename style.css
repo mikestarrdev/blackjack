@@ -11,6 +11,7 @@ img {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(236, 236, 236);
 }
 
 h2 {
@@ -36,7 +37,7 @@ h2 {
   width: 80%;
   margin: auto;
   padding: 3vh;
-  border: solid 3px rgb(255, 255, 0);
+  border: solid 3px rgb(95, 95, 0);
   border-radius: 25px;
 }
 
@@ -75,17 +76,19 @@ h2 {
   justify-content: center;
   width: 85%;
   /* height: auto; */
-  border: 1px dashed red;
+  border: 1px dashed black;
   border-radius: 15px;
   padding: 1vw;
+  background-color: white;
 }
 
 .card {
   position: relative;
   width: 5vw;
-  margin: 0.5vh;
-  padding: 0.25px;
+  margin: 0vh;
+  padding: 0.15vw;
   overflow: auto;
+  /* border: solid 1px gray; */
 }
 
 .hidden {
@@ -141,6 +144,14 @@ h2 {
   width: auto;
   background-color: purple;
   border-radius: 25px;
+  font-style: italic;
+  box-shadow: 0 4px 8px 0 rebeccapurple, 0 3px 10px 0 rebeccapurple;
+}
+
+.reset {
+  width: auto;
+  background-color: purple;
+  border-radius: 50px;
   font-style: italic;
   box-shadow: 0 4px 8px 0 rebeccapurple, 0 3px 10px 0 rebeccapurple;
 }
