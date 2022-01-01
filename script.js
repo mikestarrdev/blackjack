@@ -11,8 +11,8 @@ const playerTotalScore = document.querySelector('#score--player');
 const dealerTotalScore = document.querySelector('#score--dealer');
 
 // add +1 to currentCardIdPlayer to incrementally modify playerCard${currentCardId} objects
-let currentCardIdPlayer = 0;
-let currentCardIdDealer = 0;
+// let currentCardIdPlayer = 0;
+// let currentCardIdDealer = 0;
 
 // cards arrays hold cards for each game
 const cardsPlayer = [];
@@ -105,8 +105,8 @@ const newGame = () => {
   cardsPlayer.length = 0;
   cardsDealer.length = 0;
 
-  currentCardIdPlayer = 0;
-  currentCardIdDealer = 0;
+  //   currentCardIdPlayer = 0;
+  //   currentCardIdDealer = 0;
   // reset card images
 
   // 1. Make first 2 cards display back, hide other 4
@@ -123,8 +123,8 @@ const newGame = () => {
   // Deal 2 cards to player and dealer
   pushCardToPlayer();
   pushCardToPlayer();
-  //   pushCardToDealer();
-  //   pushCardToDealer();
+  pushCardToDealer();
+  pushCardToDealer();
 
   /*
   enableHitBtn();
@@ -153,6 +153,18 @@ const sumHand = scoreArray => {
 };
 
 const pushCardToDealer = () => {
+  // un-hide cards in object
+  const revealDealerCard = () => {
+    // let length = cardsDealer.length - 1;
+    if (cardsDealer.length - 1 === 0) {
+      dealerCards[cardsDealer.length - 1].src = cardPng;
+      dealerCards[cardsDealer.length - 1].classList.remove('.hidden');
+    } else {
+      dealerCards[cardsDealer.length - 1].src = 'cards/back.png';
+      dealerCards[cardsDealer.length - 1].classList.remove('hidden');
+    }
+  };
+
   generateNewCard();
   // evaluates if card has been dealt already
   if (cardsPlayer.includes(cardPng) || cardsDealer.includes(cardPng)) {
@@ -160,19 +172,17 @@ const pushCardToDealer = () => {
     pushCardToDealer();
   } else if (cardValue === 'ace') {
     if (sumHand(cardsDealer) <= 10) {
-      dealerCardReveal();
       cardValue = 11;
       cardsDealer.push(cardValue);
+      revealDealerCard();
     } else if (sumHand(cardsDealer) >= 11) {
-      dealerCardReveal();
       cardValue = 1;
-      // console.log(`pushing ace (value 1) to dealer`);
       cardsDealer.push(cardValue);
+      revealDealerCard();
     }
   } else {
-    // console.log(`pushing card to dealer`);
     cardsDealer.push(cardValue);
-    dealerCardReveal();
+    revealDealerCard();
     // console.log(`dealer cardValue: [${cardValue}]`);
   }
 };
