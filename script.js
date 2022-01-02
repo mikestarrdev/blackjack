@@ -3,12 +3,17 @@
 const btnNewGame = document.querySelector('.new-game');
 const btnHit = document.querySelector('.hit');
 const btnStand = document.querySelector('.stand');
+const btnReset = document.querySelector('.reset');
 
 const playerCards = document.querySelectorAll('.players-card');
 const dealerCards = document.querySelectorAll('.dealers-card');
 
-const playerTotalScore = document.querySelector('#score--player');
-const dealerTotalScore = document.querySelector('#score--dealer');
+const aceField = document.querySelector('.ace-field');
+const aceBtn1 = document.querySelector('.ace-btn-1');
+const aceBtn11 = document.querySelector('.ace-btn-11');
+
+const playerScore = document.querySelector('#player-score');
+const dealerScore = document.querySelector('#dealer-score');
 
 // cards arrays hold cards for each game
 const cardsPlayer = [];
@@ -19,8 +24,6 @@ let totalScoreDealer = 0;
 let scoreCounterPlayer = 0;
 let scoreCounterDealer = 0;
 let winner;
-let acesInput;
-let isAce;
 
 // cardDeck contains data of cards
 const cardDeck = {
@@ -102,6 +105,8 @@ const newGame = () => {
   cardsDealer.length = 0;
 
   btnHit.classList.remove('hidden');
+  btnStand.classList.remove('hidden');
+  btnReset.classList.remove('hidden');
 
   // 1. Make first 2 cards display back, hide other 4
   for (let i = 0; i < playerCards.length; i++) {
@@ -181,54 +186,64 @@ const pushCardToDealer = () => {
   }
 };
 
+const isAce = () => {
+  for (let card = 0; card < cardsPlayer.length; card++) {
+    if (cardsPlayer[card] === 'ace') {
+      // reveal buttons
+      aceField.classList.remove('hidden');
+      aceField.style.display = 'flex';
+      playerCards[card].style.border = '2px solid purple';
+
+      const hideAce = () => {
+        aceField.style.display = '';
+        playerCards[card].style.border = '';
+        aceField.classList.add('hidden');
+      };
+      // ace buttons
+      aceBtn1.addEventListener('click', () => {
+        cardsPlayer[card] = 1;
+        hideAce();
+      });
+      aceBtn11.addEventListener('click', () => {
+        cardsPlayer[card] = 11;
+        hideAce();
+      });
+    }
+  }
+};
+
 btnHit.addEventListener('click', pushCardToPlayer);
 
-const stand = () => {
+btnStand.addEventListener('click', () => {
   btnHit.classList.add('hidden');
+  btnStand.classList.add('hidden');
   // user assigns value to aces
-  /*
-  changeAce();
-    */
+  isAce();
   // if dealer's hand < 17, new card dealt
   if (sumHand(cardsDealer) < 17) pushCardToDealer();
   //   stand();
   // winnerLogic();
-
   // dealers hand > 16, run winnerLogic()
   if (sumHand(cardsDealer) >= 17) null; // winnerLogic();
-};
+});
 
-btnStand.addEventListener('click', stand);
+btnReset.addEventListener('click', () => {
+  // reset scores
+  playerScore.textContent = '0';
+  dealerScore.textContent = '0';
 
-// let user select value of ace
-const changeAce = () => {
-  // loop over cardsPlayer array
-  for (let isAce = 0; isAce < cardsPlayer.length; isAce++) {
-    // change if card is 1 or 11
-    if (
-      cardsPlayer[isAce] === 11 ||
-      cardsPlayer[isAce] === 1 ||
-      cardsPlayer[isAce] === 'ace'
-    ) {
-      let usrInput = () => {
-        acesInput = prompt(
-          "You've been dealt an Ace! Select it's value as 1 or 11"
-        );
-        if (acesInput == '1' || acesInput == '11') {
-          // next line takes user input
-          // console.log(`acesInput = ${acesInput}. Replacing`);
-          // console.log(`isAce = ${isAce}`);
-          cardsPlayer[isAce] = Number(acesInput);
-          // console.log(cardsPlayer);
-        } else {
-          console.log(
-            `You must enter 1 or 11 to continue. (re-running changeAce())`
-          );
-          // re-run function until user enters 1 or 11
-          usrInput();
-        }
-      };
-      usrInput();
-    }
+  // reset/hide cards
+  for (let i = 0; i < playerCards.length; i++) {
+    if (i === 0 || i === 1) playerCards[i].src = 'cards/back.png';
+    else playerCards[i].classList.add('hidden');
   }
-};
+  for (let i = 0; i < dealerCards.length; i++) {
+    if (i === 0 || i === 1) dealerCards[i].src = 'cards/back.png';
+    else dealerCards[i].classList.add('hidden');
+  }
+
+  // hide hit and stand btns
+  btnHit.classList.add('hidden');
+  btnStand.classList.add('hidden');
+  btnReset.classList.add('hidden');
+});
