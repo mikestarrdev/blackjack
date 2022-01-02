@@ -13,7 +13,7 @@
     </header>
     <div id="table">
       <div class="player">
-        <h2>Your hand</h2>
+        <h2>Your score: <span id="player-score">0</span></h2>
         <div class="cards-player">
           <img src="cards/back.png" class="card players-card" id="player-1" />
           <img src="cards/back.png" class="card players-card" id="player-2" />
@@ -38,12 +38,14 @@
             id="player-6"
           />
         </div>
-        <div class="stats">
-          <p>Your score: <span class="player-score">1</span></p>
+        <div class="ace-field">
+          <p>Select value of ace</p>
+          <button class="ace-btn">1</button>
+          <button class="ace-btn">11</button>
         </div>
       </div>
       <div class="dealer">
-        <h2>Dealer's hand</h2>
+        <h2>Dealer score: <span id="dealer-score">0</span></h2>
         <div class="cards-dealer">
           <img src="cards/back.png" class="card dealers-card" id="dealer-1" />
           <img src="cards/back.png" class="card dealers-card" id="dealer-2" />
@@ -68,16 +70,13 @@
             id="dealer-6"
           />
         </div>
-        <div class="stats">
-          <p>Dealer score: <span class="dealer-score">0</span></p>
-        </div>
       </div>
     </div>
     <div class="controls">
-      <button class="btn new-game">New Game</button>
-      <button class="btn hit">Hit</button>
-      <button class="btn stand">Stand</button>
-      <button class="btn reset">reset</button>
+      <button class="btn new-game">New game</button>
+      <button class="btn hit">HIT</button>
+      <button class="btn stand">STAND</button>
+      <button class="btn reset">RESET</button>
     </div>
   </body>
   <script src="script.js"></script>

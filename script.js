@@ -10,10 +10,6 @@ const dealerCards = document.querySelectorAll('.dealers-card');
 const playerTotalScore = document.querySelector('#score--player');
 const dealerTotalScore = document.querySelector('#score--dealer');
 
-// add +1 to currentCardIdPlayer to incrementally modify playerCard${currentCardId} objects
-// let currentCardIdPlayer = 0;
-// let currentCardIdDealer = 0;
-
 // cards arrays hold cards for each game
 const cardsPlayer = [];
 const cardsDealer = [];
@@ -105,9 +101,7 @@ const newGame = () => {
   cardsPlayer.length = 0;
   cardsDealer.length = 0;
 
-  //   currentCardIdPlayer = 0;
-  //   currentCardIdDealer = 0;
-  // reset card images
+  btnHit.classList.remove('hidden');
 
   // 1. Make first 2 cards display back, hide other 4
   for (let i = 0; i < playerCards.length; i++) {
@@ -127,8 +121,10 @@ const newGame = () => {
   pushCardToDealer();
 
   /*
-  enableHitBtn();
-  standHitBtn();
+  // reveal hit button
+  hitBtn.classList.remove('hidden');
+  // reveal stand button
+  standBtn.classList.remove('hidden');
   */
 };
 
@@ -146,10 +142,8 @@ const pushCardToPlayer = () => {
 };
 
 // calculates the sum of an arrays
-const sumHand = scoreArray => {
-  let sum = 0;
-  for (let i = 0; i < scoreArray.length; i++)
-    return (sum += Number(scoreArray[i]));
+const sumHand = arr => {
+  return arr.reduce((acc, i) => acc + i, 0);
 };
 
 const pushCardToDealer = () => {
@@ -184,5 +178,57 @@ const pushCardToDealer = () => {
     cardsDealer.push(cardValue);
     revealDealerCard();
     // console.log(`dealer cardValue: [${cardValue}]`);
+  }
+};
+
+btnHit.addEventListener('click', pushCardToPlayer);
+
+const stand = () => {
+  btnHit.classList.add('hidden');
+  // user assigns value to aces
+  /*
+  changeAce();
+    */
+  // if dealer's hand < 17, new card dealt
+  if (sumHand(cardsDealer) < 17) pushCardToDealer();
+  //   stand();
+  // winnerLogic();
+
+  // dealers hand > 16, run winnerLogic()
+  if (sumHand(cardsDealer) >= 17) null; // winnerLogic();
+};
+
+btnStand.addEventListener('click', stand);
+
+// let user select value of ace
+const changeAce = () => {
+  // loop over cardsPlayer array
+  for (let isAce = 0; isAce < cardsPlayer.length; isAce++) {
+    // change if card is 1 or 11
+    if (
+      cardsPlayer[isAce] === 11 ||
+      cardsPlayer[isAce] === 1 ||
+      cardsPlayer[isAce] === 'ace'
+    ) {
+      let usrInput = () => {
+        acesInput = prompt(
+          "You've been dealt an Ace! Select it's value as 1 or 11"
+        );
+        if (acesInput == '1' || acesInput == '11') {
+          // next line takes user input
+          // console.log(`acesInput = ${acesInput}. Replacing`);
+          // console.log(`isAce = ${isAce}`);
+          cardsPlayer[isAce] = Number(acesInput);
+          // console.log(cardsPlayer);
+        } else {
+          console.log(
+            `You must enter 1 or 11 to continue. (re-running changeAce())`
+          );
+          // re-run function until user enters 1 or 11
+          usrInput();
+        }
+      };
+      usrInput();
+    }
   }
 };
