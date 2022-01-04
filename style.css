@@ -24,7 +24,7 @@ h2 {
   padding: 1em;
   text-align: center;
   border: 1px solid black;
-  background-color: purple;
+  background-color: rebeccapurple;
   color: white;
 }
 
@@ -78,12 +78,12 @@ h2 {
   border: 0.5px solid black;
   border-radius: 0px;
   padding: 1vw;
-  background-color: white;
+  background-color: rgb(248, 247, 247);
 }
 
 .card {
   position: relative;
-  width: 5vw;
+  width: 6vw;
   margin: 0vh;
   padding: 0.15vw;
   overflow: auto;
@@ -163,18 +163,20 @@ h2 {
 
 .hit:hover,
 .stand:hover {
-  background-color: white;
-  color: black;
+  background-color: rgb(0, 153, 0);
+  color: white;
+  font-weight: bold;
 }
 
 .new-game {
-  background-color: purple;
+  background-color: rebeccapurple;
+  color: white;
   border-radius: 25px;
 }
 
 .new-game:hover {
-  background-color: white;
-  color: black;
+  background-color: purple;
+  font-weight: bold;
 }
 
 .reset {
@@ -185,7 +187,7 @@ h2 {
 }
 
 .reset:hover {
-  background-color: white;
-  color: gray;
+  background-color: rgb(161, 161, 161);
+  color: white;
   font-weight: bold;
 }

@@ -12,18 +12,18 @@ const aceField = document.querySelector('.ace-field');
 const aceBtn1 = document.querySelector('.ace-btn-1');
 const aceBtn11 = document.querySelector('.ace-btn-11');
 
-const playerScore = document.querySelector('#player-score');
-const dealerScore = document.querySelector('#dealer-score');
+const headline = document.querySelector('h1');
+const header = document.querySelector('#header');
+
+const playerScoreTotal = document.querySelector('#player-score');
+const dealerScoreTotal = document.querySelector('#dealer-score');
 
 // cards arrays hold cards for each game
 const cardsPlayer = [];
 const cardsDealer = [];
-// total score arrays hold scores until page is reloaded
+
 let totalScorePlayer = 0;
 let totalScoreDealer = 0;
-let scoreCounterPlayer = 0;
-let scoreCounterDealer = 0;
-let winner;
 
 // cardDeck contains data of cards
 const cardDeck = {
@@ -100,9 +100,11 @@ const generateNewCard = () => {
 
 // function initiates new game
 const newGame = () => {
-  winner = '';
   cardsPlayer.length = 0;
   cardsDealer.length = 0;
+
+  headline.textContent = '♠️ ♥️ Winners Only Blackjack ♣️ ♦️';
+  header.style.backgroundColor = 'rebeccapurple';
 
   btnHit.classList.remove('hidden');
   btnStand.classList.remove('hidden');
@@ -123,14 +125,7 @@ const newGame = () => {
   pushCardToPlayer();
   pushCardToPlayer();
   pushCardToDealer();
-  pushCardToDealer();
-
-  /*
-  // reveal hit button
-  hitBtn.classList.remove('hidden');
-  // reveal stand button
-  standBtn.classList.remove('hidden');
-  */
+  //   pushCardToDealer();
 };
 
 btnNewGame.addEventListener('click', newGame);
@@ -154,12 +149,11 @@ const sumHand = arr => {
 const pushCardToDealer = () => {
   // un-hide cards in object
   const revealDealerCard = () => {
-    // let length = cardsDealer.length - 1;
     if (cardsDealer.length - 1 === 0) {
       dealerCards[cardsDealer.length - 1].src = cardPng;
       dealerCards[cardsDealer.length - 1].classList.remove('.hidden');
     } else {
-      dealerCards[cardsDealer.length - 1].src = 'cards/back.png';
+      dealerCards[cardsDealer.length - 1].src = cardPng;
       dealerCards[cardsDealer.length - 1].classList.remove('hidden');
     }
   };
@@ -186,51 +180,79 @@ const pushCardToDealer = () => {
   }
 };
 
+// Only called when user clicks standBtn
 const isAce = () => {
+  // Loop over array looking for ace
   for (let card = 0; card < cardsPlayer.length; card++) {
     if (cardsPlayer[card] === 'ace') {
-      // reveal buttons
+      // reveal ace field
       aceField.classList.remove('hidden');
       aceField.style.display = 'flex';
       playerCards[card].style.border = '2px solid purple';
 
-      const hideAce = () => {
+      // call hideAce() after user clicks
+      const hideAce = function () {
         aceField.style.display = '';
         playerCards[card].style.border = '';
         aceField.classList.add('hidden');
       };
+
       // ace buttons
       aceBtn1.addEventListener('click', () => {
         cardsPlayer[card] = 1;
         hideAce();
+        if (cardsPlayer.includes('ace')) {
+          isAce();
+        }
+        while (sumHand(cardsDealer) < 17) pushCardToDealer();
+        winnerLogic();
       });
       aceBtn11.addEventListener('click', () => {
         cardsPlayer[card] = 11;
         hideAce();
+        if (cardsPlayer.includes('ace')) {
+          isAce();
+        }
+        while (sumHand(cardsDealer) < 17) pushCardToDealer();
+        winnerLogic();
       });
     }
   }
 };
 
-btnHit.addEventListener('click', pushCardToPlayer);
+// hit button
+btnHit.addEventListener('click', function () {
+  if (cardsPlayer.length < 6) pushCardToPlayer();
+});
 
+// stand button
 btnStand.addEventListener('click', () => {
   btnHit.classList.add('hidden');
   btnStand.classList.add('hidden');
   // user assigns value to aces
-  isAce();
+  if (cardsPlayer.includes('ace')) {
+    isAce();
+  }
   // if dealer's hand < 17, new card dealt
-  if (sumHand(cardsDealer) < 17) pushCardToDealer();
-  //   stand();
-  // winnerLogic();
-  // dealers hand > 16, run winnerLogic()
-  if (sumHand(cardsDealer) >= 17) null; // winnerLogic();
+  else {
+    while (sumHand(cardsDealer) < 17) {
+      pushCardToDealer();
+    }
+    winnerLogic();
+  }
+
+  // run winner logic function
 });
 
+// Reset button
 btnReset.addEventListener('click', () => {
   // reset scores
-  playerScore.textContent = '0';
-  dealerScore.textContent = '0';
+  playerScoreTotal.textContent = '0';
+  dealerScoreTotal.textContent = '0';
+  headline.textContent = '♠️ ♥️ Winners Only Blackjack ♣️ ♦️';
+  header.style.backgroundColor = 'rebeccapurple';
+  totalScoreDealer = 0;
+  totalScorePlayer = 0;
 
   // reset/hide cards
   for (let i = 0; i < playerCards.length; i++) {
@@ -247,3 +269,97 @@ btnReset.addEventListener('click', () => {
   btnStand.classList.add('hidden');
   btnReset.classList.add('hidden');
 });
+
+// winner logic
+const winnerLogic = () => {
+  console.log('starting winnerLogic');
+  const playerScore = sumHand(cardsPlayer);
+  const dealerScore = sumHand(cardsDealer);
+  let outcome = null;
+
+  const winnerDeclared = () => {
+    if (outcome === 'player') {
+      // alert('You win this round! 🎉');
+      headline.textContent = 'You win this round! 🎉';
+      header.style.backgroundColor = '#ff0101';
+      totalScorePlayer++;
+      playerScoreTotal.textContent = totalScorePlayer;
+    }
+    // if user dealt blackjack, increase score by 2
+    if (outcome === 'blackjackPlayer') {
+      headline.textContent = 'Blackjack! You win this round! 🎉';
+      header.style.backgroundColor = '#ff0101';
+      totalScorePlayer += 2;
+      playerScoreTotal.textContent = 'totalScorePlayer';
+    }
+    if (outcome === 'blackjackDealer') {
+      headline.textContent = 'Dealer wins by blackjack!';
+      header.style.backgroundColor = '#ff0101';
+      totalScoreDealer += 2;
+      dealerScoreTotal.textContent = totalScoreDealer;
+    }
+    if (outcome === 'dealer') {
+      headline.textContent = 'Dealer wins this round!';
+      header.style.backgroundColor = '#ff0101';
+      totalScoreDealer++;
+      dealerScoreTotal.textContent = totalScoreDealer;
+    }
+    if (outcome === 'draw') {
+      headline.textContent = `It's a draw`;
+      header.style.backgroundColor = '#ff0101';
+    }
+  };
+
+  // player win logic
+  if (cardsPlayer.length === 2 && playerScore === 21) {
+    outcome = 'blackjackPlayer';
+    setTimeout(winnerDeclared, 500);
+  } else if (
+    playerScore === 21 &&
+    cardsPlayer.length !== 21 &&
+    dealerScore !== 21
+  ) {
+    outcome = 'player';
+    setTimeout(winnerDeclared, 500);
+  } else if (dealerScore > 21 && playerScore <= 21) {
+    outcome = 'player';
+    setTimeout(winnerDeclared, 500);
+  } else if (playerScore > dealerScore && playerScore <= 21) {
+    outcome = 'player';
+    setTimeout(winnerDeclared, 500);
+  }
+  // dealer win logic
+  else if (
+    cardsDealer.length === 2 &&
+    dealerScore === 21 &&
+    playerScore !== 21
+  ) {
+    outcome = 'blackjackDealer';
+    setTimeout(winnerDeclared, 500);
+  } else if (
+    cardsDealer.length === 2 &&
+    dealerScore === 21 &&
+    playerScore === 21 &&
+    cardsPlayer.length !== 2
+  ) {
+    outcome = 'dealer';
+    setTimeout(winnerDeclared, 500);
+  } else if (dealerScore === 21 && playerScore !== 21) {
+    outcome = 'dealer';
+    setTimeout(winnerDeclared, 500);
+  } else if (playerScore > 21 && dealerScore <= 21) {
+    outcome = 'dealer';
+    setTimeout(winnerDeclared, 500);
+  } else if (dealerScore > playerScore && dealerScore <= 21) {
+    outcome = 'dealer';
+    setTimeout(winnerDeclared, 500);
+  }
+  // draw logic
+  else if (dealerScore === playerScore && playerScore != 21) {
+    outcome = 'draw';
+    setTimeout(winnerDeclared, 500);
+  } else if (dealerScore > 21 && playerScore > 21) {
+    outcome = 'draw';
+    setTimeout(winnerDeclared, 500);
+  }
+};
