@@ -279,34 +279,32 @@ const winnerLogic = () => {
 
   const winnerDeclared = () => {
     if (outcome === 'player') {
-      // alert('You win this round! 🎉');
-      headline.textContent = 'You Win This Round!!! 🎉';
+      headline.textContent = 'You Win This Round! 🎉';
       header.style.backgroundColor = 'darkgreen';
       totalScorePlayer++;
       playerScoreTotal.textContent = totalScorePlayer;
     }
     // if user dealt blackjack, increase score by 2
     if (outcome === 'blackjackPlayer') {
-      headline.textContent = 'Blackjack! You win this round!!! 🎉';
-      header.style.backgroundColor = 'olivegreen';
+      headline.textContent = '🎉 🎉 Blackjack! You win this round 🎉 🎉';
+      header.style.backgroundColor = 'darkgreen';
       totalScorePlayer += 2;
       playerScoreTotal.textContent = 'totalScorePlayer';
     }
     if (outcome === 'blackjackDealer') {
       headline.textContent = 'Dealer wins by blackjack!';
-      header.style.backgroundColor = 'orangered';
+      header.style.backgroundColor = 'gray';
       totalScoreDealer += 2;
       dealerScoreTotal.textContent = totalScoreDealer;
     }
     if (outcome === 'dealer') {
       headline.textContent = 'Dealer wins this round!';
-      header.style.backgroundColor = 'brown';
+      header.style.backgroundColor = 'gray';
       totalScoreDealer++;
       dealerScoreTotal.textContent = totalScoreDealer;
     }
     if (outcome === 'draw') {
       headline.textContent = `It's a draw!`;
-      header.style.backgroundColor = 'black';
     }
   };
 
