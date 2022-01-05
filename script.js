@@ -109,6 +109,7 @@ const newGame = () => {
   btnHit.classList.remove('hidden');
   btnStand.classList.remove('hidden');
   btnReset.classList.remove('hidden');
+  btnNewGame.classList.add('hidden');
 
   // 1. Make first 2 cards display back, hide other 4
   for (let i = 0; i < playerCards.length; i++) {
@@ -283,6 +284,7 @@ const winnerLogic = () => {
       header.style.backgroundColor = 'darkgreen';
       totalScorePlayer++;
       playerScoreTotal.textContent = totalScorePlayer;
+      btnNewGame.classList.remove('hidden');
     }
     // if user dealt blackjack, increase score by 2
     if (outcome === 'blackjackPlayer') {
@@ -290,21 +292,25 @@ const winnerLogic = () => {
       header.style.backgroundColor = 'darkgreen';
       totalScorePlayer += 2;
       playerScoreTotal.textContent = 'totalScorePlayer';
+      btnNewGame.classList.remove('hidden');
     }
     if (outcome === 'blackjackDealer') {
-      headline.textContent = 'Dealer wins by blackjack!';
+      headline.textContent = 'Dealer Wins By Blackjack!';
       header.style.backgroundColor = 'gray';
       totalScoreDealer += 2;
       dealerScoreTotal.textContent = totalScoreDealer;
+      btnNewGame.classList.remove('hidden');
     }
     if (outcome === 'dealer') {
-      headline.textContent = 'Dealer wins this round!';
+      headline.textContent = 'Dealer Wins This Round!';
       header.style.backgroundColor = 'gray';
       totalScoreDealer++;
       dealerScoreTotal.textContent = totalScoreDealer;
+      btnNewGame.classList.remove('hidden');
     }
     if (outcome === 'draw') {
-      headline.textContent = `It's a draw!`;
+      headline.textContent = `It's a Draw!`;
+      btnNewGame.classList.remove('hidden');
     }
   };
 
